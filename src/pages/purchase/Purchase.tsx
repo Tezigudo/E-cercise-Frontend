@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {Input, Modal, message} from "antd";
 import {FaLocationDot} from "react-icons/fa6";
 import NavBar from "../../components/navbar/NavBar.tsx";
@@ -20,8 +20,7 @@ function Purchase() {
     const selectedItems: string[] = location.state;
 
     if (!selectedItems || !Array.isArray(selectedItems)) {
-        navigate('/cart');
-        return null;
+        return <Navigate to="/cart" replace />;
     }
 
     const getUser = () => {

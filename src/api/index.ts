@@ -24,7 +24,10 @@ API.interceptors.request.use(
 API.interceptors.response.use(
     (response) => response,
     async (error) => {
-        if (error.response && error.response.status === 401) {
+        // Don't hijack the login request's own 401 (wrong password) — let the
+        // Login page surface the error instead of redirecting + wiping state.
+        const isAuthRequest = (error.config?.url || '').includes('/auth/login');
+        if (error.response && error.response.status === 401 && !isAuthRequest) {
             console.warn('Unauthorized! Redirecting to login...');
             message.error("Unauthorized! Redirecting to login...")
             // TODO: move JWT to HttpOnly cookie and add token-refresh mechanism (deferred)

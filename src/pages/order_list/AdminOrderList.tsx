@@ -55,7 +55,7 @@ function AdminOrderList() {
   const fetchOrderIDs = () => {
     getOrderList("", "", "", "")
       .then((response) => {
-        const orderIDs = response.orders.length != 0 ? response.orders.map((order: Order) => ({ key: order.id, value: order.id })) : []
+        const orderIDs = (response.orders || []).map((order: Order) => ({ key: order.id, value: order.id }))
         setOrderIDs(orderIDs);
       })
       .catch((err) => {

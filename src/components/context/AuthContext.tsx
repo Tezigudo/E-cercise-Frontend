@@ -66,6 +66,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
         localStorage.removeItem('accessToken');
         setRole(null);
         setUserId(null);
+        setName(null);
     };
 
     const contextValue: AuthContextProps = {
