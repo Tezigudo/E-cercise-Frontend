@@ -14,9 +14,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     define: {
-      // This way, in your code, `process.env.API_BASE_URL` will be replaced
-      // by the actual string from mergedEnv.API_BASE_URL at build time.
-      'process.env': JSON.stringify(mergedEnv),
+      // Only expose the specific keys the app needs — never serialize the whole env.
+      'process.env.API_BASE_URL': JSON.stringify(mergedEnv.API_BASE_URL),
     },
     plugins: [react(), svgr()],
   };

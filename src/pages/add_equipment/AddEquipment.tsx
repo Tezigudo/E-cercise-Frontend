@@ -65,7 +65,7 @@ const AddEquipmentPage = () => {
         try {
             const transformedPayload = {
                 ...values,
-                features: values.features.map((feature: Feature) => feature.description),
+                features: (values.features ?? []).map((feature: Feature) => feature.description),
                 options: values.options?.map((opt: any) => {
                     const {primaryImage, galleryImages, ...rest} = opt;
                     const mergedImages: any[] = [];

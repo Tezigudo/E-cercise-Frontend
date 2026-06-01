@@ -35,7 +35,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     const stepFields = [
         ['email', 'password', 'confirm_password'],
         ['first_name', 'last_name', 'address', 'phone_number'],
-        ['Age', 'height', 'weight', 'gender', 'experience'],
+        ['age', 'height', 'weight', 'gender', 'experience'],
         ['goal_id', 'preferences'],
     ];
 
@@ -152,7 +152,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
                     <Title level={4}>Your Fitness Profile</Title>
                     <Row gutter={16}>
                         <Col span={8}>
-                            <Form.Item name="Age" label="Age" rules={[{required: true},
+                            <Form.Item name="age" label="Age" rules={[{required: true},
                                 { type: "number", min: 1, max: 120, message: "Age must be between 1 and 120" }
                             ]}  hasFeedback>
                                 <InputNumber className="w-full" min={0}/>

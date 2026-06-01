@@ -28,6 +28,7 @@ import {
   backAttributes,
   frontAttributes,
 } from "../../components/muscles/muscles.ts";
+import { sortParamsWithPageLast } from "../../helper/sortParamsHelper.ts";
 
 const Home: React.FC = () => {
   const [equipmentId, setEquipmentId] = useState<number>(-1);
@@ -157,18 +158,6 @@ const Home: React.FC = () => {
     newParams.set("page", "1");
     const sortedQuery = sortParamsWithPageLast(newParams);
     setSearchParams(new URLSearchParams(sortedQuery));
-  };
-
-  const sortParamsWithPageLast = (params: URLSearchParams): string => {
-    const entries = Array.from(params.entries());
-    const filtered = entries.filter(([key]) => key !== "page");
-    const pageEntry = entries.find(([key]) => key === "page");
-
-    const sorted = [...filtered];
-    if (pageEntry) {
-      sorted.push(pageEntry);
-    }
-    return new URLSearchParams(sorted).toString();
   };
 
   useEffect(() => {

@@ -102,8 +102,6 @@ function Cart() {
             });
     };
 
-    console.log(selectedItems);
-
     useEffect(() => {
         if (modifyQuantity.lineEquipmentId) {
             modifyItemInCart(modifyQuantity);

@@ -36,6 +36,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
             const decodedJson = atob(payloadBase64);
             const payload: JwtPayload = JSON.parse(decodedJson);
 
+            // Reject expired tokens consistently with ProtectedRoute's check.
+            // TODO: add a token-refresh mechanism here instead of forcing logout (deferred).
+            if (payload.exp * 1000 <= Date.now()) {
+                logout();
+                return;
+            }
+
             setRole(payload.role);
             setUserId(payload.user_id);
             setName(payload.name);

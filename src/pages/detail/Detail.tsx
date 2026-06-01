@@ -35,7 +35,7 @@ import { Option } from "../../interfaces/equipment/UpdateEquipment.ts";
 function Detail() {
   const [activePath, setActivePath] = useState<string>("");
   const [, setShowPopOver] = useState<boolean>(false);
-  const [clickedMuscles, _] = useState<string[]>([]);
+  const [, setClickedMuscles] = useState<string[]>([]);
   const [detail, setDetail] = useState<EquipmentDetailResponse>();
   const [options, setOptions] = useState<Category[]>([]);
   const [selectedOption, setSelectedOption] = useState<number>(0);
@@ -73,12 +73,7 @@ function Detail() {
   };
 
   const handleClickedMuscles = (id: string) => {
-    if (!clickedMuscles.includes(id)) {
-      clickedMuscles.push(id);
-    } else {
-      const index = clickedMuscles.indexOf(id, 0);
-      clickedMuscles.splice(index, 1);
-    }
+    setClickedMuscles(prev => prev.includes(id) ? prev.filter(m => m !== id) : [...prev, id]);
   };
 
   const equipment_id = useParams<{ equipment_id: string | undefined }>();

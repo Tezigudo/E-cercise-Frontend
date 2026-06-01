@@ -21,7 +21,6 @@ function OrderList() {
   ) => {
     getMyOrders(orderStatus)
       .then((response) => {
-        console.log(response.orders)
         setOrders(response.orders || []);
       })
       .catch((err) => {
@@ -30,7 +29,6 @@ function OrderList() {
   };
 
   const onChange = (key: string) => {
-    console.log(key);
     setOrderStatus(key);
   };
   
@@ -115,7 +113,7 @@ function OrderList() {
         const colorMap: Record<string, string> = {
           Placed: "blue",
           Paid: "green",
-          "Shipped Out": "geekblue",
+          "Shipped out": "geekblue",
           "To Receive": "orange",
           Received: "purple",
         };
