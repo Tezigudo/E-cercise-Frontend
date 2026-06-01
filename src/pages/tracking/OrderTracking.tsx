@@ -63,8 +63,6 @@ function getInlineMessage(role: string | null, status: string | undefined) {
 function OrderTracking() {
   const [orderDetail, setOrderDetail] = useState<OrderDetailResponse>();
   const [isShowModal, setIsShowModal] = useState<boolean>(false);
-  const [received, setReceived] = useState<boolean>(true);
-  const [adminReceived, setAdminReceived] = useState<boolean>(true);
 
   const { order_id } = useParams();
   const { role } = useAuth();
@@ -124,13 +122,6 @@ function OrderTracking() {
       const response = await getOrderDetail(id);
       if (!response) return;
 
-      const { order_status } = response;
-      const isToReceive = order_status === "To Receive";
-      const isPaidOrShipped = order_status === "Paid" || order_status === "Shipped out";
-
-      setReceived(!isToReceive);
-      setAdminReceived(!isPaidOrShipped);
-
       setOrderDetail(response);
     } catch (error) {
       console.error("Failed to fetch order details:", error);
@@ -142,10 +133,10 @@ function OrderTracking() {
         .then((response) => {
           setIsShowModal(false);
           message.success(response.message);
-          setReceived(true);
-          setAdminReceived(true);
+          if (id) detail(id);
         })
         .catch((error) => {
+          message.error(error?.response?.data?.message || error?.message || 'Failed to update order status.');
           console.error(error);
         });
   };
@@ -154,7 +145,7 @@ function OrderTracking() {
     if (order_id) {
       detail(order_id);
     }
-  }, [adminReceived, received, isShowModal, order_id]);
+  }, [order_id]);
 
   return (
       <div>

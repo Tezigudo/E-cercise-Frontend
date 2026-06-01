@@ -32,7 +32,6 @@ function AdminOrderList() {
   ) => {
     getOrderList(orderStatus, userId, orderId, paymentType)
       .then((response) => {
-        console.log(response.orders)
         setOrders(response.orders || []);
       })
       .catch((err) => {
@@ -43,9 +42,8 @@ function AdminOrderList() {
   const fetchUserIDs = () => {
     getOrderList("", "", "", "")
       .then((response) => {
-        console.log(response.orders)
         const uniqueUserIDs = Array.from(
-            new Set(orders.map((order: Order) => order.user_id))
+            new Set<string>((response.orders || []).map((order: Order) => order.user_id))
           ).map((id) => ({ key: id, value: id }));
         setUserIDs(uniqueUserIDs);
       })
@@ -57,8 +55,7 @@ function AdminOrderList() {
   const fetchOrderIDs = () => {
     getOrderList("", "", "", "")
       .then((response) => {
-        console.log(response.orders)
-        const orderIDs = response.orders.length != 0 ? response.orders.map((order: Order) => ({ key: order.id, value: order.id })) : []
+        const orderIDs = (response.orders || []).map((order: Order) => ({ key: order.id, value: order.id }))
         setOrderIDs(orderIDs);
       })
       .catch((err) => {
@@ -130,7 +127,7 @@ function AdminOrderList() {
         const colorMap: Record<string, string> = {
           Placed: "blue",
           Paid: "green",
-          "Shipped Out": "geekblue",
+          "Shipped out": "geekblue",
           "To Receive": "orange",
           Received: "purple",
         };
@@ -176,7 +173,7 @@ function AdminOrderList() {
               options={[
                 { key: "Placed", value: "Placed" },
                 { key: "Paid", value: "Paid" },
-                { key: "Shipped Out", value: "Shipped Out" },
+                { key: "Shipped out", value: "Shipped out" },
                 { key: "To Receive", value: "To Receive" },
                 { key: "Received", value: "Received" },
               ]}

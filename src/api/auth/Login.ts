@@ -1,14 +1,13 @@
-import axios from "axios";
+import API from "../index.ts";
 
+// NOTE: a 401 wrong-password response will trigger the global 401 interceptor
+// (redirect to /login + removeItem). This is expected behaviour for the shared instance.
+// TODO: move JWT to HttpOnly cookie and add token-refresh mechanism (deferred).
 export const fetchToken = async (email: string, password: string) => {
-    const response = await axios.post(`${process.env.API_BASE_URL}/api/auth/login`,
+    const response = await API.post('/auth/login',
         {
             "email": email,
             "password": password
-        },
-        {
-            method: "POST",
-            headers: {'Content-Type': 'application/json'},
         }
     );
     return response.data;

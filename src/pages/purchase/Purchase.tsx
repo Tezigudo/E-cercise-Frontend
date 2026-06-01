@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {Link, Navigate, useLocation, useNavigate} from "react-router-dom";
 import {Input, Modal, message} from "antd";
 import {FaLocationDot} from "react-icons/fa6";
 import NavBar from "../../components/navbar/NavBar.tsx";
@@ -17,7 +17,11 @@ function Purchase() {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const navigate = useNavigate();
     const location = useLocation();
-    const selectedItems = location.state;
+    const selectedItems: string[] = location.state;
+
+    if (!selectedItems || !Array.isArray(selectedItems)) {
+        return <Navigate to="/cart" replace />;
+    }
 
     const getUser = () => {
       getUserProfile()
@@ -78,7 +82,7 @@ function Purchase() {
     return (
         <div>
             <NavBar/>
-            {cart?.line_equipments?.length ?? 0  > 0 ? (
+            {(cart?.line_equipments?.length ?? 0) > 0 ? (
                 <div className="px-[75px] py-10 space-y-4">
                     <div className="w-full h-[120px] bg-[#E7E7E7] px-8 py-5 space-y-5 rounded-md">
                         <div className="flex items-center space-x-3">

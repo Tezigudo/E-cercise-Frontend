@@ -6,7 +6,6 @@ import {
   useNavigate,
   useSearchParams,
 } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 import ECerciseLogo from "/assets/navbar/E-Cercise-Logo.png";
 import ComparisonLogo from "/assets/navbar/Comparison-Logo.png";
 import Cart from "/assets/navbar/Cart.png";
@@ -15,6 +14,7 @@ import { useAuth } from "../../hook/UseAuth.ts";
 import BottomNavBar from "./BottomNavBar.tsx";
 import { Role } from "../../enum/Role.ts";
 import UserProfile from "./UserProfile.tsx";
+import { sortParamsWithPageLast } from "../../helper/sortParamsHelper.ts";
 
 function NavBar() {
   const [tempKeyword, setTempKeyword] = useState<string>("");
@@ -52,37 +52,8 @@ function NavBar() {
   };
 
   const handleCartClick = () => {
-    const token = localStorage.getItem("accessToken");
-    if (token) {
-      try {
-        const decode: { user_id: string; expires: string } = jwtDecode(token);
-        if (new Date() >= new Date(decode.expires)) {
-          localStorage.removeItem("accessToken");
-          navigate("/login");
-        } else {
-          navigate("/cart");
-          console.log("token is not expired");
-        }
-      } catch (err) {
-        console.error("Invalid token", err);
-        localStorage.removeItem("accessToken");
-        navigate("/login");
-      }
-    } else {
-      navigate("/login");
-    }
-  };
-
-  const sortParamsWithPageLast = (params: URLSearchParams): string => {
-    const entries = Array.from(params.entries());
-    const filtered = entries.filter(([key]) => key !== "page");
-    const pageEntry = entries.find(([key]) => key === "page");
-
-    const sorted = [...filtered];
-    if (pageEntry) {
-      sorted.push(pageEntry);
-    }
-    return new URLSearchParams(sorted).toString();
+    // Auth is enforced by ProtectedRoute; just navigate.
+    navigate("/cart");
   };
 
   useEffect(() => {
